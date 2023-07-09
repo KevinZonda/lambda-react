@@ -49,9 +49,11 @@ const columns: ColumnsType<StatusNode> = [
                   ? <Tag icon={<CloseCircleOutlined/>} color="error">Nil</Tag>
                   : status === 'unavailable'
                     ? <Tag icon={<ExclamationCircleOutlined/>} color="default">Unavailable</Tag>
-                    : status === 'unknown'
-                      ? <Tag icon={<ExclamationCircleOutlined/>} color="warning">Unknown</Tag>
-                      : <Tag icon={<CloseCircleOutlined/>} color="error">Error</Tag>
+                    : status === 'freeze'
+                      ? <Tag icon={<ExclamationCircleOutlined/>} color="default">Disabled</Tag>
+                      : status === 'unknown'
+                        ? <Tag icon={<ExclamationCircleOutlined/>} color="warning">Unknown</Tag>
+                        : <Tag icon={<CloseCircleOutlined/>} color="error">Error</Tag>
         }
       </>
     ),
@@ -90,7 +92,8 @@ export const StatusList = observer(() => {
       <Table
         style={{width: '100%'}}
         dataSource={statusItemToArr(StatusStore.status)}
-        columns={columns}/>
+        columns={columns}
+      />
     </>
   )
 })
