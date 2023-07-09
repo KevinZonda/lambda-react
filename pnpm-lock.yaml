@@ -5,12 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@ant-design/icons':
+    specifier: ^5.1.4
+    version: 5.1.4(react-dom@18.2.0)(react@18.2.0)
   antd:
     specifier: ^5.6.4
     version: 5.6.4(react-dom@18.2.0)(react@18.2.0)
   axios:
     specifier: ^1.4.0
     version: 1.4.0
+  mobx:
+    specifier: ^6.9.0
+    version: 6.9.0
   mobx-react-lite:
     specifier: ^3.4.3
     version: 3.4.3(mobx@6.9.0)(react-dom@18.2.0)(react@18.2.0)

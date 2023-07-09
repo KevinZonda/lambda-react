@@ -80,7 +80,7 @@ export const StatusApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        timelineGetPosts: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAllStatus: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/status`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -123,8 +123,8 @@ export const StatusApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async timelineGetPosts(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: StatusItem; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.timelineGetPosts(options);
+        async getAllStatus(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: StatusItem; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllStatus(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -143,8 +143,8 @@ export const StatusApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        timelineGetPosts(options?: any): AxiosPromise<{ [key: string]: StatusItem; }> {
-            return localVarFp.timelineGetPosts(options).then((request) => request(axios, basePath));
+        getAllStatus(options?: any): AxiosPromise<{ [key: string]: StatusItem; }> {
+            return localVarFp.getAllStatus(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -163,8 +163,8 @@ export class StatusApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StatusApi
      */
-    public timelineGetPosts(options?: AxiosRequestConfig) {
-        return StatusApiFp(this.configuration).timelineGetPosts(options).then((request) => request(this.axios, this.basePath));
+    public getAllStatus(options?: AxiosRequestConfig) {
+        return StatusApiFp(this.configuration).getAllStatus(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

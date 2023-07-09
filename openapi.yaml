@@ -13,7 +13,7 @@ paths:
         - Token: []
       summary: Get All status
       description: ''
-      operationId: timeline-get-posts
+      operationId: get-all-status
       responses:
         '200':
           description: Successful
