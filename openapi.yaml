@@ -1,0 +1,56 @@
+openapi: 3.0.1
+info:
+  title: λ by KevinZonda
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8080/
+paths:
+  /status:
+    get:
+      tags:
+        - Status
+      security:
+        - Token: []
+      summary: Get All status
+      description: ''
+      operationId: timeline-get-posts
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusItemMap'
+
+components:
+  securitySchemes:
+    Token:
+      type: apiKey
+      in: header
+      name: Authorisation
+  schemas:
+    StatusItemMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/StatusItem'
+
+    StatusItem:
+      type: object
+      properties:
+        kind:
+          type: string
+        status:
+          type: string
+        last_trig_at:
+          type: string
+          format: date-time
+        keep_until:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+
