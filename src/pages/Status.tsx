@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {StatusStore} from "../stores";
 import {observer} from "mobx-react-lite";
-import {Table, Tag, Typography} from "antd";
+import {Button, Table, Tag, Typography} from "antd";
 import {StatusItem} from "../api";
 import type {ColumnsType} from 'antd/es/table';
 import {
@@ -14,7 +14,7 @@ import {
 
 export const StatusPage = () => {
   return (
-    <div>
+    <div style={{width: '100%'}}>
       <Typography.Title level={3}>λ by KevinZonda Status</Typography.Title>
       <StatusList/>
     </div>
@@ -62,12 +62,18 @@ const columns: ColumnsType<StatusNode> = [
       {
         title: 'Last Trig',
         key: 'lastTrig',
-        dataIndex: 'lastTrig'
+        dataIndex: 'lastTrig',
+        render: (_, {lastTrig}) => (
+          <p>{lastTrig ? new Date(lastTrig).toLocaleString() : '-'}</p>
+        ),
       },
       {
         title: 'Keep Until',
         key: 'keepUntil',
-        dataIndex: 'keepUntil'
+        dataIndex: 'keepUntil',
+        render: (_, {keepUntil}) => (
+          <p>{keepUntil ? new Date(keepUntil).toLocaleString() : '-'}</p>
+        ),
       },
     ]
   },
@@ -80,8 +86,11 @@ export const StatusList = observer(() => {
   }, [])
   return (
     <>
-      <Table dataSource={statusItemToArr(StatusStore.status)} columns={columns}>
-      </Table>
+      <Button onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
+      <Table
+        style={{width: '100%'}}
+        dataSource={statusItemToArr(StatusStore.status)}
+        columns={columns}/>
     </>
   )
 })
