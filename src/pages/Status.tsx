@@ -105,6 +105,8 @@ const columns: ColumnsType<StatusNode> = [
     key: 'action',
     render: (_, n) => (
       <Space size="middle">
+        <Link disabled={n.status === 'live'} onClick={() => manage('run', n.uid)}>Run</Link>
+        <Link disabled={n.status !== 'live'} onClick={() => manage('stop', n.uid)}>Stop</Link>
         <Link disabled={n.status === 'freeze'} onClick={() => manage('freeze', n.uid)}>Disable</Link>
         <Link disabled={n.status !== 'freeze'} onClick={() => manage('unfreeze', n.uid)}>Enable</Link>
         <Link onClick={() => manage('del', n.uid)}>Remove</Link>

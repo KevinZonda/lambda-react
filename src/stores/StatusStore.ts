@@ -1,6 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {StatusItem} from "../api";
 import {SettingStore, StatusAPI} from "./index.ts";
+import {notification} from "antd";
 
 export class _StatusStore {
   constructor() {
@@ -34,6 +35,13 @@ export class _StatusStore {
           })
         }
       )
+      .catch(() => {
+        notification.error({
+          message: 'Failed to fetch status',
+          description: 'Failed to fetch status',
+          duration: 1
+        })
+      })
       .finally(
         () => {
           runInAction(() => {
