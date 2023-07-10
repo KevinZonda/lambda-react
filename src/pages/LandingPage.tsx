@@ -1,8 +1,8 @@
 import logo from '/lambda.png'
-import './App.css'
+import './LandingPage.css'
 import {useNavigate} from "react-router-dom";
 
-function App() {
+export const LandingPage = () => {
   const nav = useNavigate()
 
   return (
@@ -20,5 +20,3 @@ function App() {
     </>
   )
 }
-
-export default App

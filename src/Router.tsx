@@ -1,15 +1,16 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import App from "./App.tsx";
+import {LandingPage} from "./pages/LandingPage.tsx";
 import {StatusPage} from "./pages/Status.tsx";
 import {observer} from "mobx-react-lite";
 import {ConfigProvider, theme} from "antd";
 import {SettingStore} from "./stores";
+
 const {defaultAlgorithm, darkAlgorithm} = theme;
 
 export const router = createBrowserRouter([
   {
     path: "",
-    element: <App/>
+    element: <LandingPage/>
   },
   {
     path: "/status",
