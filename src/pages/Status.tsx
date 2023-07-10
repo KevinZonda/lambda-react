@@ -6,9 +6,12 @@ import {StatusItem} from "../api";
 import type {ColumnsType} from 'antd/es/table';
 import {
   CheckCircleOutlined,
-  ClockCircleOutlined,
   CloseCircleOutlined,
   ExclamationCircleOutlined,
+  InfoCircleOutlined,
+  PoweroffOutlined,
+  QuestionCircleOutlined,
+  ReloadOutlined,
   SyncOutlined
 } from "@ant-design/icons";
 
@@ -40,17 +43,17 @@ const columns: ColumnsType<StatusNode> = [
       <>
         {
           status === 'live' ?
-            <Tag icon={<CheckCircleOutlined/>} color="success">success</Tag>
+            <Tag icon={<CheckCircleOutlined/>} color="success">Running</Tag>
             : status === 'idle'
               ? <Tag icon={<SyncOutlined spin/>} color="processing">Idle</Tag>
               : status === 'unloaded'
-                ? <Tag icon={<ClockCircleOutlined/>} color="default">Unloaded</Tag>
+                ? <Tag icon={<InfoCircleOutlined/>} color="default">Unloaded</Tag>
                 : status === 'nil'
                   ? <Tag icon={<CloseCircleOutlined/>} color="error">Nil</Tag>
                   : status === 'unavailable'
-                    ? <Tag icon={<ExclamationCircleOutlined/>} color="default">Unavailable</Tag>
+                    ? <Tag icon={<QuestionCircleOutlined/>} color="default">Unavailable</Tag>
                     : status === 'freeze'
-                      ? <Tag icon={<ExclamationCircleOutlined/>} color="default">Disabled</Tag>
+                      ? <Tag icon={<PoweroffOutlined/>} color="default">Disabled</Tag>
                       : status === 'unknown'
                         ? <Tag icon={<ExclamationCircleOutlined/>} color="warning">Unknown</Tag>
                         : <Tag icon={<CloseCircleOutlined/>} color="error">Error</Tag>
@@ -88,11 +91,12 @@ export const StatusList = observer(() => {
   }, [])
   return (
     <>
-      <Button onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
+      <Button icon={<ReloadOutlined/>} onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
       <Table
-        style={{width: '100%'}}
+        style={{width: '100%', lineHeight: '1'}}
         dataSource={statusItemToArr(StatusStore.status)}
         columns={columns}
+        size={"small"}
       />
     </>
   )
