@@ -6,10 +6,10 @@ export const LandingPage = () => {
   const nav = useNavigate()
 
   return (
-    <>
+    <div className={"landing-div"}>
       <div>
         <a href="https://lambda.kevinzonda.com" target="_blank">
-          <img style={{minWidth: '128px', minHeight: '128px'}} src={logo} className="logo" alt="KevinZondaLambda logo" />
+          <img style={{minWidth: '128px', minHeight: '128px'}} src={logo} className="logo" alt="KevinZondaLambda logo"/>
         </a>
       </div>
       <h1 style={{marginBottom: '0'}}>λ: Serverless Simple</h1>
@@ -17,6 +17,6 @@ export const LandingPage = () => {
 
       <button disabled={true}>Available Soon</button>
       <button style={{marginLeft: '10px'}} onClick={() => nav('/status')}>Status</button>
-    </>
+    </div>
   )
 }

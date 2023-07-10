@@ -14,17 +14,31 @@ import {
   ReloadOutlined,
   SyncOutlined
 } from "@ant-design/icons";
+import {useInterval} from "usehooks-ts";
 
 const {Link} = Typography;
 
 export const StatusPage = () => {
   return (
     <div style={{width: '100%'}}>
-      <Typography.Title level={3}>λ by KevinZonda Status</Typography.Title>
-      <StatusList/>
+      <div style={{textAlign: 'center'}}>
+        <Typography.Title level={3}>λ by KevinZonda Status</Typography.Title>
+      </div>
+      <div style={{marginLeft: '20px', marginRight: '20px'}}>
+        <ControlPanel/>
+        <StatusList/>
+      </div>
     </div>
   )
 }
+
+const ControlPanel = observer(() => {
+  return (
+    <div style={{marginBottom: '12px'}}>
+      <Button disabled={StatusStore.isFetching} icon={<ReloadOutlined/>} onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
+    </div>
+  )
+})
 
 const columns: ColumnsType<StatusNode> = [
   {
@@ -106,9 +120,14 @@ export const StatusList = observer(() => {
   useEffect(() => {
     StatusStore.fetchStatus()
   }, [])
+  useInterval(
+    () => {
+      StatusStore.fetchStatus()
+    },
+    5000
+  )
   return (
     <>
-      <Button icon={<ReloadOutlined/>} onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
       <Table
         style={{width: '100%', lineHeight: '1'}}
         dataSource={statusItemToArr(StatusStore.status)}
