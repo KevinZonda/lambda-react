@@ -1,7 +1,9 @@
 import logo from '/lambda.png'
 import './App.css'
+import {useNavigate} from "react-router-dom";
 
 function App() {
+  const nav = useNavigate()
 
   return (
     <>
@@ -14,6 +16,7 @@ function App() {
       <h2 className={"grey-text"}>Managed Serverless Service by KevinZonda</h2>
 
       <button disabled={true}>Available Soon</button>
+      <button style={{marginLeft: '10px'}} onClick={() => nav('/status')}>Status</button>
     </>
   )
 }

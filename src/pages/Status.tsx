@@ -15,6 +15,8 @@ import {
   SyncOutlined
 } from "@ant-design/icons";
 
+const {Link} = Typography;
+
 export const StatusPage = () => {
   return (
     <div style={{width: '100%'}}>
@@ -47,7 +49,7 @@ const columns: ColumnsType<StatusNode> = [
             : status === 'idle'
               ? <Tag icon={<SyncOutlined spin/>} color="processing">Idle</Tag>
               : status === 'unloaded'
-                ? <Tag icon={<InfoCircleOutlined/>} color="default">Unloaded</Tag>
+                ? <Tag icon={<InfoCircleOutlined/>} color="blue">Unloaded</Tag>
                 : status === 'nil'
                   ? <Tag icon={<CloseCircleOutlined/>} color="error">Nil</Tag>
                   : status === 'unavailable'
@@ -87,9 +89,9 @@ const columns: ColumnsType<StatusNode> = [
     key: 'action',
     render: (_, n) => (
       <Space size="middle">
-        <a onClick={() => manage('freeze', n.uid)}>Disable</a>
-        <a onClick={() => manage('unfreeze', n.uid)}>Enable</a>
-        <a onClick={() => manage('del', n.uid)}>Remove</a>
+        <Link disabled={n.status === 'freeze'} onClick={() => manage('freeze', n.uid)}>Disable</Link>
+        <Link disabled={n.status !== 'freeze'} onClick={() => manage('unfreeze', n.uid)}>Enable</Link>
+        <Link onClick={() => manage('del', n.uid)}>Remove</Link>
       </Space>
     ),
   },

@@ -1,6 +1,10 @@
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import App from "./App.tsx";
 import {StatusPage} from "./pages/Status.tsx";
+import {observer} from "mobx-react-lite";
+import {ConfigProvider, theme} from "antd";
+import {SettingStore} from "./stores";
+const {defaultAlgorithm, darkAlgorithm} = theme;
 
 export const router = createBrowserRouter([
   {
@@ -12,3 +16,14 @@ export const router = createBrowserRouter([
     element: <StatusPage/>
   }
 ]);
+
+export const Entry = observer(() => {
+  return (
+    <ConfigProvider
+      theme={{
+        algorithm: SettingStore.DefaultTheme() === 'dark' ? darkAlgorithm : defaultAlgorithm,
+      }}>
+      <RouterProvider router={router}/>
+    </ConfigProvider>
+  )
+})
