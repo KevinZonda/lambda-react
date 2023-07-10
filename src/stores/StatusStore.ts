@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import {StatusItem} from "../api";
 import {StatusAPI} from "./index.ts";
 
@@ -15,8 +15,9 @@ export class _StatusStore {
 
   public async fetchStatus() {
     const v = await StatusAPI.getAllStatus()
-    this._status = v.data
+    runInAction(() => {
+      this._status = v.data
+    })
   }
-
 
 }

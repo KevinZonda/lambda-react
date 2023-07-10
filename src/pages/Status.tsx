@@ -1,7 +1,7 @@
 import {useEffect} from "react";
-import {StatusStore} from "../stores";
+import {ManageAPI, StatusStore} from "../stores";
 import {observer} from "mobx-react-lite";
-import {Button, Table, Tag, Typography} from "antd";
+import {Button, Space, Table, Tag, Typography} from "antd";
 import {StatusItem} from "../api";
 import type {ColumnsType} from 'antd/es/table';
 import {
@@ -82,8 +82,23 @@ const columns: ColumnsType<StatusNode> = [
       },
     ]
   },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (_, n) => (
+      <Space size="middle">
+        <a onClick={() => manage('freeze', n.uid)}>Disable</a>
+        <a onClick={() => manage('unfreeze', n.uid)}>Enable</a>
+        <a onClick={() => manage('del', n.uid)}>Remove</a>
+      </Space>
+    ),
+  },
 ];
 
+function manage(oper: string, uid: string) {
+  ManageAPI.manageTask({oper, uid})
+  StatusStore.fetchStatus()
+}
 
 export const StatusList = observer(() => {
   useEffect(() => {

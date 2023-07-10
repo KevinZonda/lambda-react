@@ -9,8 +9,6 @@ paths:
     get:
       tags:
         - Status
-      security:
-        - Token: []
       summary: Get All status
       description: ''
       operationId: get-all-status
@@ -21,7 +19,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StatusItemMap'
-
+  /manage:
+    post:
+      tags:
+        - Management
+      operationId: manage-task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManageTaskRequest'
+      responses:
+        '200':
+          description: 'ok'
 components:
   securitySchemes:
     Token:
@@ -34,8 +45,19 @@ components:
       additionalProperties:
         $ref: '#/components/schemas/StatusItem'
 
+    ManageTaskRequest:
+      type: object
+      properties:
+        uid:
+          type: string
+        oper:
+          type: string
+
     StatusItem:
       type: object
+      required:
+        - uid
+        - kind
       properties:
         kind:
           type: string

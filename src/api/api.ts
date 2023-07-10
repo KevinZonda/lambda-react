@@ -39,6 +39,25 @@ export interface ErrorResponse {
 /**
  * 
  * @export
+ * @interface ManageTaskRequest
+ */
+export interface ManageTaskRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ManageTaskRequest
+     */
+    'uid'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ManageTaskRequest
+     */
+    'oper'?: string;
+}
+/**
+ * 
+ * @export
  * @interface StatusItem
  */
 export interface StatusItem {
@@ -47,7 +66,7 @@ export interface StatusItem {
      * @type {string}
      * @memberof StatusItem
      */
-    'kind'?: string;
+    'kind': string;
     /**
      * 
      * @type {string}
@@ -67,6 +86,109 @@ export interface StatusItem {
      */
     'keep_until'?: string;
 }
+
+/**
+ * ManagementApi - axios parameter creator
+ * @export
+ */
+export const ManagementApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {ManageTaskRequest} manageTaskRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        manageTask: async (manageTaskRequest: ManageTaskRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'manageTaskRequest' is not null or undefined
+            assertParamExists('manageTask', 'manageTaskRequest', manageTaskRequest)
+            const localVarPath = `/manage`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(manageTaskRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ManagementApi - functional programming interface
+ * @export
+ */
+export const ManagementApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ManagementApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {ManageTaskRequest} manageTaskRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async manageTask(manageTaskRequest: ManageTaskRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.manageTask(manageTaskRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ManagementApi - factory interface
+ * @export
+ */
+export const ManagementApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ManagementApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {ManageTaskRequest} manageTaskRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        manageTask(manageTaskRequest: ManageTaskRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.manageTask(manageTaskRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ManagementApi - object-oriented interface
+ * @export
+ * @class ManagementApi
+ * @extends {BaseAPI}
+ */
+export class ManagementApi extends BaseAPI {
+    /**
+     * 
+     * @param {ManageTaskRequest} manageTaskRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ManagementApi
+     */
+    public manageTask(manageTaskRequest: ManageTaskRequest, options?: AxiosRequestConfig) {
+        return ManagementApiFp(this.configuration).manageTask(manageTaskRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * StatusApi - axios parameter creator
@@ -92,9 +214,6 @@ export const StatusApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication Token required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorisation", configuration)
 
 
     
