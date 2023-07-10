@@ -1,15 +1,15 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {StatusItem} from "../api";
-import {StatusAPI} from "./index.ts";
+import {SettingStore, StatusAPI} from "./index.ts";
 
 export class _StatusStore {
   constructor() {
     makeAutoObservable(this);
   }
 
-  private _status : Record<string, StatusItem> = {};
+  private _status: Record<string, StatusItem> = {};
 
-  public get status() : Record<string, StatusItem> {
+  public get status(): Record<string, StatusItem> {
     return this._status;
   }
 
@@ -25,10 +25,22 @@ export class _StatusStore {
     runInAction(() => {
       this._isFetching = true
     })
-    const v = await StatusAPI.getAllStatus()
-    runInAction(() => {
-      this._status = v.data
-      this._isFetching = false
-    })
+
+    await StatusAPI.getAllStatus(SettingStore.getAxiosOptions())
+      .then(
+        (v) => {
+          runInAction(() => {
+            this._status = v.data
+          })
+        }
+      )
+      .finally(
+        () => {
+          runInAction(() => {
+            this._isFetching = false
+          })
+        }
+      )
+
   }
 }

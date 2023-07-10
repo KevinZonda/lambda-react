@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {ManageAPI, StatusStore} from "../stores";
+import {ManageAPI, SettingStore, StatusStore} from "../stores";
 import {observer} from "mobx-react-lite";
 import {Button, Space, Table, Tag, Typography} from "antd";
 import {StatusItem} from "../api";
@@ -15,6 +15,7 @@ import {
   SyncOutlined
 } from "@ant-design/icons";
 import {useInterval} from "usehooks-ts";
+import {SettingModal} from "./SettingModal.tsx";
 
 const {Link} = Typography;
 
@@ -36,6 +37,7 @@ const ControlPanel = observer(() => {
   return (
     <div style={{marginBottom: '12px'}}>
       <Button disabled={StatusStore.isFetching} icon={<ReloadOutlined/>} onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
+      <SettingModal/>
     </div>
   )
 })
@@ -112,7 +114,7 @@ const columns: ColumnsType<StatusNode> = [
 ];
 
 function manage(oper: string, uid: string) {
-  ManageAPI.manageTask({oper, uid})
+  ManageAPI.manageTask({oper, uid}, SettingStore.getAxiosOptions())
   StatusStore.fetchStatus()
 }
 
