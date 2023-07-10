@@ -2,7 +2,7 @@ import {observer} from "mobx-react-lite";
 import {Button, Input, Modal} from "antd";
 import {useState} from "react";
 import {SettingStore, StatusStore} from "../stores";
-import {SettingOutlined} from "@ant-design/icons";
+import {EyeInvisibleOutlined, EyeTwoTone, SettingOutlined} from "@ant-design/icons";
 
 
 export const SettingModal = observer(() => {
@@ -11,9 +11,11 @@ export const SettingModal = observer(() => {
     setOpen(true);
   };
   const [endpoint, setEndpoint] = useState(SettingStore.getEndPoint());
+  const [apiKey, setApiKey] = useState(SettingStore.apiKey);
   const handleOk = () => {
     //setLoading(true);
     SettingStore.setEndPoint(endpoint)
+    SettingStore.apiKey = apiKey
     StatusStore.fetchStatus()
     setOpen(false)
   };
@@ -40,7 +42,8 @@ export const SettingModal = observer(() => {
           </Button>,
         ]}
       >
-        <Input value={endpoint} onChange={(e) => setEndpoint(e.target.value)} />
+        <Input addonBefore={"EndPoint"} value={endpoint} onChange={(e) => setEndpoint(e.target.value)} />
+        <Input.Password  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} addonBefore={"API Key"} value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
       </Modal>
     </>
   )

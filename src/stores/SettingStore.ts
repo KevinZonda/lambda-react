@@ -4,6 +4,14 @@ import {ManageAPI, StatusAPI} from "./index.ts";
 export class _SettingStore {
   constructor() {
     makeAutoObservable(this);
+    const _ep = localStorage.getItem("endpoint")
+    if (_ep) {
+      this.setEndPoint(_ep)
+    }
+    const _apiKey = localStorage.getItem("apiKey")
+    if (_apiKey) {
+      this.apiKey = _apiKey
+    }
   }
 
   public DefaultTheme() {
@@ -19,6 +27,7 @@ export class _SettingStore {
   }
   public set apiKey(apiKey: string) {
     this._apiKey = apiKey
+    localStorage.setItem("apiKey", apiKey)
   }
 
   public getAxiosOptions() {
@@ -29,10 +38,10 @@ export class _SettingStore {
       }
     }
   }
-
   public setEndPoint(ep : string) {
     StatusAPI.setBasePath(ep)
     ManageAPI.setBasePath(ep)
+    localStorage.setItem("endpoint", ep)
   }
 
   public getEndPoint() {
