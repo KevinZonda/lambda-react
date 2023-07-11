@@ -42,7 +42,7 @@ export const SettingModal = observer(() => {
           </Button>,
         ]}
       >
-        <Space direction={'vertical'}>
+        <Space direction={'vertical'} style={{width: '100%'}}>
           <Input addonBefore={"EndPoint"} value={endpoint} onChange={(e) => setEndpoint(e.target.value)}/>
           <Input.Password iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
                           addonBefore={"API Key"} value={apiKey} onChange={(e) => setApiKey(e.target.value)}/>

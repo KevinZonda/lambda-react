@@ -22,7 +22,7 @@ const {Link} = Typography;
 
 const mapKind = (kind: string | undefined) => {
   if (kind === undefined) return ""
-  switch (kind){
+  switch (kind) {
     case 'http_binary':
       return "HTTP Gateway"
     case 'exec_binary':
@@ -35,9 +35,9 @@ const mapKind = (kind: string | undefined) => {
 
 export const StatusPage = () => {
   return (
-    <div style={{width: '100%'}}>
+    <div style={{width: '100%', maxWidth: '100vw'}}>
       <div style={{textAlign: 'center'}}>
-        <Typography.Title level={3}>λ by KevinZonda Status</Typography.Title>
+        <Typography.Title level={3}>λ by KevinZonda</Typography.Title>
       </div>
       <div style={{marginLeft: '20px', marginRight: '20px'}}>
         <ControlPanel/>
@@ -50,9 +50,9 @@ export const StatusPage = () => {
 const ControlPanel = observer(() => {
   return (
     <Space style={{marginBottom: '8px'}}>
-      <Button disabled={StatusStore.isFetching} icon={<ReloadOutlined/>} onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
-      <SettingModal/>
+      <Button icon={<ReloadOutlined/>} onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
       <NewFunctionModal/>
+      <SettingModal/>
     </Space>
   )
 })
@@ -141,12 +141,14 @@ function manage(oper: string, uid: string) {
           notification.error({
             message: 'Unauthorised',
             description: 'Please make sure your credentials are correct',
-            duration: 3});
+            duration: 3
+          });
         } else {
           notification.error({
             message: 'Management Failed',
             description: 'Error with ' + error.response.data,
-            duration: 3});
+            duration: 3
+          });
         }
       } else if (error.request) {
         // The request was made but no response was received

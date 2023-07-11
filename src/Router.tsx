@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
     element: <LandingPage/>
   },
   {
-    path: "/status",
+    path: "/panel",
     element: <StatusPage/>
   }
 ]);
