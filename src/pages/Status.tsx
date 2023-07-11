@@ -20,6 +20,19 @@ import {NewFunctionModal} from "./NewFunctionModal.tsx";
 
 const {Link} = Typography;
 
+const mapKind = (kind: string | undefined) => {
+  if (kind === undefined) return ""
+  switch (kind){
+    case 'http_binary':
+      return "HTTP Gateway"
+    case 'exec_binary':
+      return "Executable"
+    case 'exec_script':
+      return "Script"
+  }
+  return kind
+}
+
 export const StatusPage = () => {
   return (
     <div style={{width: '100%'}}>
@@ -54,6 +67,9 @@ const columns: ColumnsType<StatusNode> = [
     title: 'Kind',
     dataIndex: 'kind',
     key: 'kind',
+    render: (_, {kind}) => (
+      <p>{mapKind(kind)}</p>
+    ),
   },
   {
     title: 'Status',

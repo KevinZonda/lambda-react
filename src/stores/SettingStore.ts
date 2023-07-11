@@ -7,6 +7,8 @@ export class _SettingStore {
     const _ep = localStorage.getItem("endpoint")
     if (_ep) {
       this.setEndPoint(_ep)
+    } else {
+      this.setEndPoint('https://sigma.kevinzonda.com')
     }
     const _apiKey = localStorage.getItem("apiKey")
     if (_apiKey) {
