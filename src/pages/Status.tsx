@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {ManageAPI, SettingStore, StatusStore} from "../stores";
 import {observer} from "mobx-react-lite";
-import {Button, Space, Table, Tag, Typography} from "antd";
+import {Button, notification, Space, Table, Tag, Typography} from "antd";
 import {StatusItem} from "../api";
 import type {ColumnsType} from 'antd/es/table';
 import {
@@ -134,7 +134,31 @@ const columns: ColumnsType<StatusNode> = [
 ];
 
 function manage(oper: string, uid: string) {
-  ManageAPI.manageTask({oper, uid}, SettingStore.getAxiosOptions())
+  ManageAPI.manageTask({oper, uid}, SettingStore.getAxiosOptions()).catch(
+    (error) => {
+      if (error.response) {
+        if (error.response.status === 401) {
+          notification.error({
+            message: 'Unauthorised',
+            description: 'Please check are your credentials are correct',
+            duration: 3});
+        } else {
+          notification.error({
+            message: 'Management Failed',
+            description: 'Error with ' + error.response.data,
+            duration: 3});
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+    }
+  )
   StatusStore.fetchStatus()
 }
 

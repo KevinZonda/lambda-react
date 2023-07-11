@@ -1,4 +1,4 @@
-import {Button, Input, Modal, Select, Space} from "antd";
+import {Button, Input, Modal, notification, Select, Space} from "antd";
 import {useState} from "react";
 import {ManageAPI, SettingStore} from "../stores";
 import {AppstoreAddOutlined} from "@ant-design/icons";
@@ -15,7 +15,31 @@ export const NewFunctionModal = () => {
   const [lang, setLang] = useState('js');
   const [code, setCode] = useState('');
   const handleOk = () => {
-    ManageAPI.addTask({uid, lang, code}, SettingStore.getAxiosOptions())
+    ManageAPI.addTask({uid, lang, code}, SettingStore.getAxiosOptions()).catch(
+      (error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            notification.error({
+              message: 'Unauthorised',
+              description: 'Please check are your credentials are correct',
+              duration: 3});
+          } else {
+            notification.error({
+              message: 'Management Failed',
+              description: 'Error with ' + error.response.data,
+              duration: 3});
+          }
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+      }
+    )
     setOpen(false)
   };
 
