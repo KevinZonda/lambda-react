@@ -13,8 +13,7 @@ openapi-generator-cli generate \
     --global-property=apiTests=false,modelTests=false
 
 mkdir -p "$PROJECT_FOLDER/src/api"
-rm -fr "$PROJECT_FOLDER/src/api"
-mkdir -p "$PROJECT_FOLDER/src/api"
-mv "$PROJECT_FOLDER"/tmp/*.ts "$PROJECT_FOLDER/src/api"
+rm -f "$PROJECT_FOLDER/src/api/api.ts"
+mv "$PROJECT_FOLDER"/tmp/api.ts "$PROJECT_FOLDER/src/api"
 
 rm -rf "$PROJECT_FOLDER"/tmp/

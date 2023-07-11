@@ -16,6 +16,7 @@ import {
 } from "@ant-design/icons";
 import {useInterval} from "usehooks-ts";
 import {SettingModal} from "./SettingModal.tsx";
+import {NewFunctionModal} from "./NewFunctionModal.tsx";
 
 const {Link} = Typography;
 
@@ -35,10 +36,11 @@ export const StatusPage = () => {
 
 const ControlPanel = observer(() => {
   return (
-    <div style={{marginBottom: '12px'}}>
+    <Space style={{marginBottom: '8px'}}>
       <Button disabled={StatusStore.isFetching} icon={<ReloadOutlined/>} onClick={() => StatusStore.fetchStatus()}>Refresh</Button>
       <SettingModal/>
-    </div>
+      <NewFunctionModal/>
+    </Space>
   )
 })
 

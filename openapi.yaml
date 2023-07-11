@@ -33,6 +33,20 @@ paths:
       responses:
         '200':
           description: 'ok'
+  /manage/add:
+    post:
+      tags:
+        - Management
+      operationId: add-task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManageAddPlainTask'
+      responses:
+        '200':
+          description: 'ok'
 components:
   securitySchemes:
     Token:
@@ -51,6 +65,16 @@ components:
         uid:
           type: string
         oper:
+          type: string
+
+    ManageAddPlainTask:
+      type: object
+      properties:
+        uid:
+          type: string
+        lang:
+          type: string
+        code:
           type: string
 
     StatusItem:
