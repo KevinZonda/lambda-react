@@ -140,7 +140,7 @@ function manage(oper: string, uid: string) {
         if (error.response.status === 401) {
           notification.error({
             message: 'Unauthorised',
-            description: 'Please check are your credentials are correct',
+            description: 'Please make sure your credentials are correct',
             duration: 3});
         } else {
           notification.error({
