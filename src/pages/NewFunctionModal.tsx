@@ -1,10 +1,23 @@
 import {Button, Input, Modal, notification, Select, Space} from "antd";
 import {useState} from "react";
 import {ManageAPI, SettingStore} from "../stores";
-import TextArea from "antd/es/input/TextArea";
 import {PiFunctionBold} from "react-icons/pi";
+import MonacoEditor from '@uiw/react-monacoeditor';
 
-
+function langToEditorLang(lang: string) {
+  switch (lang) {
+    case 'js':
+      return 'javascript'
+    case 'ts':
+      return 'typescript'
+    case 'py':
+      return 'python'
+    case 'sh':
+      return 'shell'
+    default:
+      return 'rust'
+  }
+}
 export const NewFunctionModal = () => {
   const [open, setOpen] = useState(false);
   const showModal = () => {
@@ -22,12 +35,14 @@ export const NewFunctionModal = () => {
             notification.error({
               message: 'Unauthorised',
               description: 'Please make sure your credentials are correct',
-              duration: 3});
+              duration: 3
+            });
           } else {
             notification.error({
               message: 'Management Failed',
               description: 'Error with ' + error.response.data,
-              duration: 3});
+              duration: 3
+            });
           }
         } else if (error.request) {
           // The request was made but no response was received
@@ -69,10 +84,23 @@ export const NewFunctionModal = () => {
           <Input addonBefore={"UID"} value={uid} onChange={(e) => setUid(e.target.value)}/>
           <Select
             value={lang}
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             onChange={(e) => setLang(e)}
-            options={[{ value: 'js', label: 'JavaScript' }, { value: 'ts', label: 'TypeScript' }, { value: 'py', label: 'Python' }, {value: 'sh', label: 'Shell'}]}
-          />          <TextArea value={code} onChange={(e) => setCode(e.target.value)}/>
+            options={[
+              {value: 'js', label: 'JavaScript'},
+              {value: 'ts', label: 'TypeScript'},
+              {value: 'py', label: 'Python'},
+              {value: 'sh', label: 'Shell'}]}
+          />
+          <MonacoEditor
+            language={langToEditorLang(lang)}
+            //value={code}
+            onChange={(v, _) => setCode(v)}
+            style={{minHeight: '100px'}}
+            options={{
+              theme: SettingStore.DefaultTheme() === 'dark' ? 'vs-dark' : 'vs',
+            }}
+          />
         </Space>
       </Modal>
     </>
