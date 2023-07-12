@@ -69,7 +69,7 @@ const ControlPanel = observer(() => {
 
 const columns: ColumnsType<StatusNode> = [
   {
-    title: 'UID',
+    title: 'Function',
     dataIndex: 'uid',
     key: 'uid',
     render: (_, {uid}) => (
