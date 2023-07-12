@@ -1,8 +1,9 @@
 import {Button, Input, Modal, notification, Select, Space} from "antd";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ManageAPI, SettingStore} from "../stores";
 import {PiFunctionBold} from "react-icons/pi";
-import MonacoEditor from '@uiw/react-monacoeditor';
+// import MonacoEditor from '@uiw/react-monacoeditor';
+import {Editor, useMonaco} from "@monaco-editor/react";
 
 function langToEditorLang(lang: string) {
   switch (lang) {
@@ -23,6 +24,13 @@ export const NewFunctionModal = () => {
   const showModal = () => {
     setOpen(true);
   };
+  const monaco = useMonaco();
+
+  useEffect(() => {
+    if (monaco) {
+      console.log('[Editor] Macro instance', monaco);
+    }
+  }, [monaco]);
 
   const [uid, setUid] = useState('');
   const [lang, setLang] = useState('js');
@@ -92,14 +100,13 @@ export const NewFunctionModal = () => {
               {value: 'py', label: 'Python'},
               {value: 'sh', label: 'Shell'}]}
           />
-          <MonacoEditor
+          <Editor
             language={langToEditorLang(lang)}
             //value={code}
-            onChange={(v, _) => setCode(v)}
-            style={{minHeight: '100px'}}
-            options={{
-              theme: SettingStore.DefaultTheme() === 'dark' ? 'vs-dark' : 'vs',
-            }}
+            onChange={(v, _) => v && setCode(v)}
+            //style={{minHeight: '100px'}}
+            height={'100px'}
+            theme={SettingStore.DefaultTheme() === 'dark' ? 'vs-dark' : 'vs'}
           />
         </Space>
       </Modal>
