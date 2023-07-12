@@ -12,10 +12,10 @@ export const LandingPage = () => {
           <img style={{minWidth: '128px', minHeight: '128px'}} src={logo} className="logo" alt="KevinZondaLambda logo"/>
         </a>
       </div>
-      <h1 style={{marginBottom: '0'}}>λ: Serverless Simple</h1>
+      <h1 style={{marginBottom: '0'}}>λ: Serverless Engine</h1>
       <h2 className={"grey-text"}>Managed Serverless Service by KevinZonda</h2>
 
-      <button style={{marginLeft: '10px'}} onClick={() => nav('/panel')}>Start Σ Platform →</button>
+      <button style={{marginLeft: '10px'}} onClick={() => nav('/panel')}>Try Σ Platform →</button>
     </div>
   )
 }
