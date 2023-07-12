@@ -28,11 +28,32 @@ const mapKind = (kind: string | undefined) => {
     case 'http_binary':
       return "HTTP Gateway"
     case 'exec_binary':
-      return "Executable"
+      return "Executable Binary"
     case 'exec_script':
-      return "Script"
+      return "Executable Script"
+    case 'exec_js':
+      return "JavaScript Module"
+    case 'exec_js_controller':
+      return "JavaScript Controller"
   }
   return kind
+}
+
+const routeType = (kind: string | undefined) => {
+  if (kind === undefined) return ""
+  switch (kind) {
+    case 'http_binary':
+      return "Proxy"
+    case 'exec_binary':
+      return "Mapper"
+    case 'exec_script':
+      return "Mapper"
+    case 'exec_js':
+      return "Module Mapper"
+    case 'exec_js_controller':
+      return "Path Controller"
+  }
+  return 'Unknown'
 }
 
 export const StatusPage = () => {
@@ -82,6 +103,14 @@ const columns: ColumnsType<StatusNode> = [
     key: 'kind',
     render: (_, {kind}) => (
       <p>{mapKind(kind)}</p>
+    ),
+  },
+  {
+    title: 'Router',
+    dataIndex: 'kind',
+    key: 'router',
+    render: (_, {kind}) => (
+      <p>{routeType(kind)}</p>
     ),
   },
   {
