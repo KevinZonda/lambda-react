@@ -4,6 +4,7 @@ import {ManageAPI, SettingStore} from "../stores";
 import {PiFunctionBold} from "react-icons/pi";
 // import MonacoEditor from '@uiw/react-monacoeditor';
 import {Editor, useMonaco} from "@monaco-editor/react";
+import {CloseOutlined, FullscreenExitOutlined, FullscreenOutlined, SaveOutlined} from "@ant-design/icons";
 
 function langToEditorLang(lang: string) {
   switch (lang) {
@@ -19,8 +20,10 @@ function langToEditorLang(lang: string) {
       return 'rust'
   }
 }
+
 export const NewFunctionModal = () => {
   const [open, setOpen] = useState(false);
+  const [large, setLarge] = useState(false);
   const showModal = () => {
     setOpen(true);
   };
@@ -80,13 +83,18 @@ export const NewFunctionModal = () => {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <Button key="back" onClick={handleCancel}>
+          <Button icon={large ? <FullscreenExitOutlined/> : <FullscreenOutlined/>} key="large"
+                  onClick={() => setLarge(!large)}>
+            {large ? 'Small' : 'Large'}
+          </Button>,
+          <Button icon={<CloseOutlined/>} key="back" onClick={handleCancel}>
             Cancel
           </Button>,
-          <Button key="submit" type="primary" onClick={handleOk}>
+          <Button icon={<SaveOutlined/>} key="submit" type="primary" onClick={handleOk}>
             Save
           </Button>,
         ]}
+        width={large ? '100%' : undefined}
       >
         <Space direction={"vertical"} style={{width: "100%"}}>
           <Input addonBefore={"UID"} value={uid} onChange={(e) => setUid(e.target.value)}/>
@@ -103,9 +111,10 @@ export const NewFunctionModal = () => {
           <Editor
             language={langToEditorLang(lang)}
             //value={code}
-            onChange={(v, _) => v && setCode(v)}
+            onChange={(v) => v && setCode(v)}
             //style={{minHeight: '100px'}}
-            height={'100px'}
+            height={ large ? '50vh' :'30vh'}
+
             theme={SettingStore.DefaultTheme() === 'dark' ? 'vs-dark' : 'vs'}
           />
         </Space>
