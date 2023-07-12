@@ -1,8 +1,8 @@
 import {Button, Input, Modal, notification, Select, Space} from "antd";
 import {useState} from "react";
 import {ManageAPI, SettingStore} from "../stores";
-import {AppstoreAddOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
+import {PiFunctionBold} from "react-icons/pi";
 
 
 export const NewFunctionModal = () => {
@@ -48,7 +48,7 @@ export const NewFunctionModal = () => {
   };
   return (
     <>
-      <Button type="primary" icon={<AppstoreAddOutlined />} onClick={showModal}>
+      <Button type="primary" icon={<span className={"anticon"}><PiFunctionBold/></span>} onClick={showModal}>
         New Function
       </Button>
       <Modal

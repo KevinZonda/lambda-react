@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {ManageAPI, SettingStore, StatusStore} from "../stores";
 import {observer} from "mobx-react-lite";
-import {Button, notification, Space, Table, Tag, Typography} from "antd";
+import {Button, Layout, notification, Space, Table, Tag, Typography} from "antd";
 import {StatusItem} from "../api";
 import type {ColumnsType} from 'antd/es/table';
 import {
@@ -17,6 +17,8 @@ import {
 import {useInterval} from "usehooks-ts";
 import {SettingModal} from "./SettingModal.tsx";
 import {NewFunctionModal} from "./NewFunctionModal.tsx";
+
+const {Content, Footer} = Layout;
 
 const {Link} = Typography;
 
@@ -35,15 +37,23 @@ const mapKind = (kind: string | undefined) => {
 
 export const StatusPage = () => {
   return (
-    <div style={{width: '100%', maxWidth: '100vw'}}>
-      <div style={{textAlign: 'center'}}>
-        <Typography.Title level={3}>λ by KevinZonda</Typography.Title>
-      </div>
-      <div style={{marginLeft: '20px', marginRight: '20px'}}>
-        <ControlPanel/>
-        <StatusList/>
-      </div>
-    </div>
+    <Layout style={{width: '100%', maxWidth: '100vw', height: '100vh'}}>
+      <Content>
+        <div>
+          <div style={{textAlign: 'center'}}>
+            <Typography.Title level={3}>λ by KevinZonda</Typography.Title>
+          </div>
+          <div style={{marginLeft: '20px', marginRight: '20px'}}>
+            <ControlPanel/>
+            <StatusList/>
+          </div>
+        </div>
+      </Content>
+      <Footer style={{textAlign: 'center'}}>
+        Σ Platform, Powered by λ Engine.<br/>
+        Copyright &copy; 2023 KevinZonda. All Rights Reserved.
+      </Footer>
+    </Layout>
   )
 }
 
@@ -62,6 +72,9 @@ const columns: ColumnsType<StatusNode> = [
     title: 'UID',
     dataIndex: 'uid',
     key: 'uid',
+    render: (_, {uid}) => (
+      <Link href={SettingStore.getEndPoint() + '/funcs/' + uid} target={"_blank"}>{uid}</Link>
+    )
   },
   {
     title: 'Kind',
